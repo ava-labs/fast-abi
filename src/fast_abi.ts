@@ -51,7 +51,9 @@ export class FastABI {
             let newType = type.join('[]'); // e.g address[][] -> address[]
             return (value as any[]).map((v) => this._deserializeResultIn({ ...abi, type: newType }, v));
         }
-        if (abi.type.indexOf('int32') !== -1) {
+        if (abi.type.indexOf('int32') !== -1 ||
+            abi.type.indexOf('int16') !== -1 ||
+            abi.type.indexOf('int8') !== -1) {
             return parseInt(value);
         }
         if (abi.type.indexOf('int') !== -1) {
