@@ -1,7 +1,7 @@
 import { DataItem, MethodAbi } from 'ethereum-types';
 import { BigNumber } from 'ethers';
 
-const { Coder } = require('../build-native');
+const { Coder } = require('../bin');
 
 // Allow you to override the BigNumber module used, but it must have the same 
 // signature as the ethers.js BigNumber module (e.g. BigNumber.from(..))

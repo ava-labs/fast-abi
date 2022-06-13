@@ -1,6 +1,5 @@
 native/target
 build/
-build-native/
 native/index.node
 native/artifacts.json
 target/
