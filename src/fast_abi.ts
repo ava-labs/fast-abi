@@ -22,7 +22,7 @@ export class FastABI {
 
     public encodeInput(fnName: string, values: any[]): string {
         const found = this._abi.filter((a) => a.name === fnName)[0];
-        const args = this._serializeArgsOut(values, found.inputs);
+        const args = this._serializeArgsOut(found.inputs, values);
         try {
             const encoded = this._coder.encodeInput(fnName, args);
             return `0x${encoded}`;
@@ -80,7 +80,7 @@ export class FastABI {
 
     // Convert the javascript arguments into the FastAbi preferred arguments
     private _serializeArgsOut(abis: DataItem[], args: any[]): any[] {
-        return abis.map((abi, i) => this._serializeArgOut(args[i], abi));
+        return abis.map((abi, i) => this._serializeArgOut(abi, args[i]));
     }
 
     private _serializeArgOut(abi: DataItem, arg: any): any {
