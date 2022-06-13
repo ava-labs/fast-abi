@@ -1,10 +1,12 @@
 import { DataItem, MethodAbi } from 'ethereum-types';
-import { BigNumber } from 'bignumber.js';
+import { BigNumber } from 'ethers';
 
-const { Coder } = require('../bin');
+const { Coder } = require('../build-native');
 
+// Allow you to override the BigNumber module used, but it must have the same 
+// signature as the ethers.js BigNumber module (e.g. BigNumber.from(..))
 interface Opts {
-    BigNumber: any;
+    BigNumber: any; // Must have same signature as Ethers.js BigNumber.
 }
 
 export class FastABI {
@@ -49,8 +51,11 @@ export class FastABI {
             let newType = type.join('[]'); // e.g address[][] -> address[]
             return (value as any[]).map((v) => this._deserializeResultIn({ ...abi, type: newType }, v));
         }
+        if (abi.type.indexOf('int32') !== -1) {
+            return parseInt(value);
+        }
         if (abi.type.indexOf('int') !== -1) {
-            return new this._opts.BigNumber(value);
+            return new this._opts.BigNumber.from(value);
         }
         if (abi.type === 'tuple' && abi.components) {
             const output: any = {};
