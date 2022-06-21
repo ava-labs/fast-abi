@@ -111,6 +111,10 @@ export class FastABI {
             return arg.toString(10);
         }
 
+        if (abi.type === 'bool') {
+            return arg;
+        }
+
         return arg.toString();
     }
 }
