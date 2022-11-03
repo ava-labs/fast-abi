@@ -1,6 +1,6 @@
 {
     "name": "@avalabs/fast-abi",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "description": "",
     "main": "lib/index.js",
     "license": "MIT",
@@ -17,7 +17,7 @@
         "build:rs:release": "yarn build:rs --release",
         "install": "node-pre-gyp install --fallback-to-build=false || yarn build:rs:release",
         "watch": "tsc -w -p tsconfig.json",
-        "package": "./package-binaries.sh",
+        "package": "node-pre-gyp package",
         "upload-binary": "yarn build && yarn node-pre-gyp package && yarn node-pre-gyp-github publish",
         "prepack": "shx rm -rf bin"
     },
