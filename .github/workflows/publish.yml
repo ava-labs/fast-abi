@@ -13,10 +13,10 @@ jobs:
             matrix:
                 node-version: [16.x]
                 include:
-                  - os: ubuntu-latest
-                    arch: x64
-                  - os: macos-latest
-                    arch: arm64
+                    - os: ubuntu-latest
+                      arch: x64
+                    - os: macos-latest
+                      arch: arm64
 
         runs-on: [${{ matrix.os }}, ${{ matrix.arch }}]
 
