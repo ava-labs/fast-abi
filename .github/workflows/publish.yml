@@ -20,7 +20,7 @@ jobs:
                     - node-version: 16.x
                       os: macos-latest
                       hardware: 'arm64'
-        runs-on: [${{ matrix.os }}, ${{ matrix.arch }}]
+        runs-on: [${{ matrix.os }}, ${{ matrix.hardware }}]
 
         steps:
             - name: Checkout the repo
