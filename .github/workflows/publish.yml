@@ -12,9 +12,8 @@ jobs:
         strategy:
             matrix:
                 node-version: ['16.15.1']
-                os: [ubuntu-latest, macos-latest]
 
-        runs-on: ${{ matrix.os }}
+        runs-on: ubuntu-latest
 
         steps:
             - name: Checkout the repo
@@ -28,8 +27,11 @@ jobs:
               with:
                   node-version: ${{ matrix.node-version }}
 
-            - name: yarn
+            - name: Install
               run: yarn install
+
+            - name: Build
+              run: yarn build
 
             #- name: Test
             #  run: npm test
