@@ -19,7 +19,7 @@ jobs:
                       hardware: x64
                     - node-version: 16.x
                       os: macos-latest
-                      hardware: arm 64
+                      hardware: arm64
         runs-on: [${{ matrix.os }}, ${{ matrix.arch }}]
 
         steps:
