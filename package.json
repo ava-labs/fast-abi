@@ -17,7 +17,7 @@
         "build:rs:release": "yarn build:rs --release",
         "install": "node-pre-gyp install --fallback-to-build=false || yarn build:rs:release",
         "watch": "tsc -w -p tsconfig.json",
-        "package": "node-pre-gyp package",
+        "package": "./package-binaries.sh",
         "upload-binary": "yarn build && yarn node-pre-gyp package && yarn node-pre-gyp-github publish",
         "prepack": "shx rm -rf bin"
     },
