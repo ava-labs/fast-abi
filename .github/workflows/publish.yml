@@ -12,9 +12,13 @@ jobs:
         strategy:
             matrix:
                 node-version: [16.x]
-                os: [ubuntu-latest, macos-latest]
+                include:
+                  - os: ubuntu-latest
+                    arch: x64
+                  - os: macos-latest
+                    arch: arm64
 
-        runs-on: ${{ matrix.os }}
+        runs-on: [${{ matrix.os }}, ${{ matrix.arch }}]
 
         steps:
             - name: Checkout the repo
