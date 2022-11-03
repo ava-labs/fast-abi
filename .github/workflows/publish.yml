@@ -15,11 +15,11 @@ jobs:
                 os: [ubuntu-latest, macos-latest]
                 include:
                     - node-version: 16.x
-                      os: 'ubuntu-latest'
-                      arch: 'x64'
+                      os: ubuntu-latest
+                      hardware: x64
                     - node-version: 16.x
-                      os: 'macos-latest'
-                      arch: 'arm64'
+                      os: macos-latest
+                      hardware: arm 64
         runs-on: [${{ matrix.os }}, ${{ matrix.arch }}]
 
         steps:
