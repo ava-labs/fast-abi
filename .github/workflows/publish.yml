@@ -16,10 +16,10 @@ jobs:
                 include:
                     - node-version: 16.x
                       os: ubuntu-latest
-                      hardware: x64
+                      hardware: 'x64'
                     - node-version: 16.x
                       os: macos-latest
-                      hardware: arm64
+                      hardware: 'arm64'
         runs-on: [${{ matrix.os }}, ${{ matrix.arch }}]
 
         steps:
