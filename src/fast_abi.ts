@@ -1,10 +1,12 @@
 import { DataItem, MethodAbi } from 'ethereum-types';
-import { BigNumber } from 'bignumber.js';
+import { BigNumber } from 'ethers';
 
 const { Coder } = require('../bin');
 
+// Allow you to override the BigNumber module used, but it must have the same 
+// signature as the ethers.js BigNumber module (e.g. BigNumber.from(..))
 interface Opts {
-    BigNumber: any;
+    BigNumber: any; // Must have same signature as Ethers.js BigNumber.
 }
 
 export class FastABI {
@@ -20,7 +22,7 @@ export class FastABI {
 
     public encodeInput(fnName: string, values: any[]): string {
         const found = this._abi.filter((a) => a.name === fnName)[0];
-        const args = this._serializeArgsOut(values, found.inputs);
+        const args = this._serializeArgsOut(found.inputs, values);
         try {
             const encoded = this._coder.encodeInput(fnName, args);
             return `0x${encoded}`;
@@ -49,8 +51,13 @@ export class FastABI {
             let newType = type.join('[]'); // e.g address[][] -> address[]
             return (value as any[]).map((v) => this._deserializeResultIn({ ...abi, type: newType }, v));
         }
+        if (abi.type.indexOf('int32') !== -1 ||
+            abi.type.indexOf('int16') !== -1 ||
+            abi.type.indexOf('int8') !== -1) {
+            return parseInt(value);
+        }
         if (abi.type.indexOf('int') !== -1) {
-            return new this._opts.BigNumber(value);
+            return new this._opts.BigNumber.from(value);
         }
         if (abi.type === 'tuple' && abi.components) {
             const output: any = {};
@@ -75,7 +82,7 @@ export class FastABI {
 
     // Convert the javascript arguments into the FastAbi preferred arguments
     private _serializeArgsOut(abis: DataItem[], args: any[]): any[] {
-        return abis.map((abi, i) => this._serializeArgOut(args[i], abi));
+        return abis.map((abi, i) => this._serializeArgOut(abi, args[i]));
     }
 
     private _serializeArgOut(abi: DataItem, arg: any): any {
@@ -102,6 +109,10 @@ export class FastABI {
 
         if (this._opts.BigNumber.isBigNumber(arg)) {
             return arg.toString(10);
+        }
+
+        if (abi.type === 'bool') {
+            return arg;
         }
 
         return arg.toString();

@@ -2,8 +2,10 @@ native/target
 build/
 native/index.node
 native/artifacts.json
+target/
 lib/
 **/*~
 **/node_modules
 **/.DS_Store
 bin/
+.env
