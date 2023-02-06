@@ -61,3 +61,17 @@ To publish this package:
 
    Note that this will work for other pairings too, but we have noticed
    problems doing this with an architecture mismatch from the running machine.
+
+### Troubleshooting
+
+A lot can go wrong in the publishing steps. So keeping a list of things here for future reference:
+
+`yarn` fails when using nvm.
+
+If you see the following error:
+```
+gyp: Call to 'node -e "require('nan')"' returned exit status 0 while in binding.gyp. while trying to load binding.gyp
+```
+nvm might be causing issues with node-gyp.  Try running the commands from a shell without nvm.
+
+See this issue which pointed to the issue: https://github.com/neon-bindings/neon/issues/434.

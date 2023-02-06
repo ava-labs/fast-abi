@@ -12,7 +12,9 @@ jobs:
         strategy:
             matrix:
                 node-version: ['18.x', '16.x']
-        runs-on: ubuntu-latest
+                os: [ubuntu-20.04, macos-12]
+
+        runs-on: ${{ matrix.os }}
 
         steps:
             - name: Checkout the repo
