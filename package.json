@@ -1,6 +1,6 @@
 {
     "name": "@avalabs/fast-abi",
-    "version": "0.0.12",
+    "version": "0.1.0",
     "description": "",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
@@ -8,7 +8,6 @@
     "dependencies": {
         "@mapbox/node-pre-gyp": "^1.0.10",
         "cargo-cp-artifact": "^0.1.7",
-        "ethers": "^5.6.8",
         "uuid": "^8.3.2"
     },
     "scripts": {

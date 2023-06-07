@@ -1,21 +1,12 @@
 import { DataItem, MethodAbi } from 'ethereum-types';
-import { BigNumber } from 'ethers';
 
 const { Coder } = require('../bin');
-
-// Allow you to override the BigNumber module used, but it must have the same 
-// signature as the ethers.js BigNumber module (e.g. BigNumber.from(..))
-interface Opts {
-    BigNumber: any; // Must have same signature as Ethers.js BigNumber.
-}
 
 export class FastABI {
     private readonly _coder: any;
     private readonly _abi: MethodAbi[];
-    private readonly _opts: Opts;
 
-    constructor(abi: MethodAbi[], opts?: Opts) {
-        this._opts = { BigNumber: BigNumber, ...opts } || { BigNumber: BigNumber };
+    constructor(abi: MethodAbi[]) {
         this._abi = abi;
         this._coder = new Coder(JSON.stringify(abi));
     }
@@ -57,7 +48,7 @@ export class FastABI {
             return parseInt(value);
         }
         if (abi.type.indexOf('int') !== -1) {
-            return new this._opts.BigNumber.from(value);
+            return BigInt(value);
         }
         if (abi.type === 'tuple' && abi.components) {
             const output: any = {};
@@ -105,10 +96,6 @@ export class FastABI {
                 output.push(this._serializeArgOut(c, arg[c.name]));
             }
             return output;
-        }
-
-        if (this._opts.BigNumber.isBigNumber(arg)) {
-            return arg.toString(10);
         }
 
         if (abi.type === 'bool') {
