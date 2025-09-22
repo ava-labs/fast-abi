@@ -1,6 +1,6 @@
 {
     "name": "@avalabs/fast-abi",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "description": "",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
@@ -13,8 +13,8 @@
     "scripts": {
         "build": "yarn build:ts && yarn build:rs:release",
         "build:ts": "tsc -b",
-        "build:rs": "cargo-cp-artifact -nc bin/index.node -- cargo build --message-format=json-render-diagnostics",
-        "build:rs:release": "yarn build:rs --release",
+        "build:rs": "cargo build --message-format=json-render-diagnostics && mkdir -p bin && mv index.node bin/",
+        "build:rs:release": "cargo build --release --message-format=json-render-diagnostics && mkdir -p bin && mv index.node bin/",
         "install": "node-pre-gyp install --fallback-to-build=false || yarn build:rs:release",
         "test": "jest",
         "watch": "tsc -w -p tsconfig.json",
