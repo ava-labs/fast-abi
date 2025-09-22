@@ -16,6 +16,7 @@
         "build:rs": "cargo-cp-artifact -nc bin/index.node -- cargo build --message-format=json-render-diagnostics",
         "build:rs:release": "yarn build:rs --release",
         "install": "node-pre-gyp install --fallback-to-build=false || yarn build:rs:release",
+        "test": "jest",
         "watch": "tsc -w -p tsconfig.json",
         "package": "node-pre-gyp package",
         "upload-binary": "yarn build && yarn package && yarn node-pre-gyp-github publish",
