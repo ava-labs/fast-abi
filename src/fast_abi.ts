@@ -17,7 +17,7 @@ export class FastABI {
         try {
             const encoded = this._coder.encodeInput(fnName, args);
             return `0x${encoded}`;
-        } catch (e) {
+        } catch (e: any) {
             throw new Error(`${e.message}.\nvalues=${JSON.stringify(values)}\nargs=${JSON.stringify(args)}`);
         }
     }
