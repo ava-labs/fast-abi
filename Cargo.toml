@@ -15,7 +15,7 @@ crate-type = ["cdylib"]
 neon-build = "0.10.1"
 
 [dependencies]
-neon = "0.10.1"
+neon = "1.1.1"
 anyhow = "1.0.40"
 hex = "0.4.2"
 ethabi = "14.0"

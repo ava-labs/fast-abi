@@ -1,6 +1,6 @@
 import { DataItem, MethodAbi } from 'ethereum-types';
 
-const { Coder } = require('../bin');
+const nativeModule = require('../bin');
 
 export class FastABI {
     private readonly _coder: any;
@@ -8,14 +8,14 @@ export class FastABI {
 
     constructor(abi: MethodAbi[]) {
         this._abi = abi;
-        this._coder = new Coder(JSON.stringify(abi));
+        this._coder = nativeModule.new(JSON.stringify(abi));
     }
 
     public encodeInput(fnName: string, values: any[]): string {
         const found = this._abi.filter((a) => a.name === fnName)[0];
         const args = this._serializeArgsOut(found.inputs, values);
         try {
-            const encoded = this._coder.encodeInput(fnName, args);
+            const encoded = nativeModule.encodeInput(this._coder, fnName, args);
             return `0x${encoded}`;
         } catch (e: any) {
             throw new Error(`${e.message}.\nvalues=${JSON.stringify(values)}\nargs=${JSON.stringify(args)}`);
@@ -24,13 +24,13 @@ export class FastABI {
 
     public decodeInput(fnName: string, output: string): any {
         const found = this._abi.filter((a) => a.name === fnName)[0];
-        const decoded = this._coder.decodeInput(fnName, output);
+        const decoded = nativeModule.decodeInput(this._coder, fnName, output);
         return this._deserializeResultsIn(found.inputs, decoded);
     }
 
     public decodeOutput(fnName: string, output: string): any {
         const found = this._abi.filter((a) => a.name === fnName)[0];
-        const decoded = this._coder.decodeOutput(fnName, output);
+        const decoded = nativeModule.decodeOutput(this._coder, fnName, output);
         return this._deserializeResultsIn(found.outputs, decoded);
     }
 
